@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteConfig } from '../data/siteConfig';
+---
+
+<BaseLayout
+  title="关于我与商业合作透明度"
+  description="了解 HDC 的个人空间、创办初衷、测评标准以及商业合作与返佣披露政策。"
+>
+  <div class="mx-auto max-w-3xl px-4 py-12 sm:px-6">
+    <!-- Header with HDC Avatar -->
+    <header class="mb-10 border-b border-kraft-200 dark:border-stone-800 pb-8 flex flex-col sm:flex-row items-center sm:items-start gap-6">
+      <img
+        src={siteConfig.avatar}
+        alt="HDC"
+        class="h-28 w-28 rounded-2xl object-cover ring-2 ring-kraft-300 dark:ring-stone-700 shadow-md shrink-0"
+      />
+      <div class="text-center sm:text-left">
+        <span class="inline-block text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400 mb-1">
+          <span class="lang-zh">个人独立空间</span>
+          <span class="lang-en">Personal Independent Space</span>
+        </span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-kraft-950 dark:text-stone-50 tracking-tight mb-2">
+          <span class="lang-zh">关于 HDC 的空间</span>
+          <span class="lang-en">About HDC's Space</span>
+        </h1>
+        <p class="text-base text-kraft-700 dark:text-stone-300 leading-relaxed">
+          <span class="lang-zh">记录个人思考，分享亲测好用的数字工具、桌面好物与工作流沉淀。</span>
+          <span class="lang-en">Documenting thoughts, battle-tested desk gear, and digital productivity workflows.</span>
+        </p>
+      </div>
+    </header>
+
+    <div class="prose dark:prose-invert">
+      <div class="lang-zh">
+        <h2>为什么创办这个空间？</h2>
+        <p>
+          在当下算法推送与信息过载的时代，互联网充斥着大量虚假种草与拼凑洗稿。很多工具徒有其表，很多数码硬件买回来只是在桌面上吃灰。
+        </p>
+        <p>
+          <strong>HDC的空间</strong> 就是我的一个数字自留地。我希望通过真实的长期深度体验，为你过滤消费噪音，只保留真正能解决具体生产力瓶颈、或能带来切实生活幸福感的高品质装备与工具。
+        </p>
+
+        <h2>三大内容推荐铁律</h2>
+        <ul>
+          <li><strong>长期亲测</strong>：绝不搞走马观花式的跑分，所有软件与硬件必须经过数周乃至数月的主力使用后才总结成文。</li>
+          <li><strong>优缺点并重</strong>：拒绝盲目吹捧，再优秀的产品也会坦诚指明其局限与适用人群，帮你有效避坑。</li>
+          <li><strong>客观独立</strong>：保持中立客观的评测视角，绝不因商业合作而违背事实与真实感受。</li>
+        </ul>
+
+        <h2 id="disclosure">商业合作与返佣披露政策（Affiliate Disclosure）</h2>
+        <p>
+          为了支持本站的持续服务器成本、测试硬件购入及深度内容创作，本站部分页面包含商业返佣合作链接（即所谓的 Affiliate Links 或推荐链接）。
+        </p>
+        <blockquote>
+          <strong>透明承诺：</strong><br />
+          1. 当您通过本站特定链接完成购买或注册时，我可能会从合作厂商获得一定比例的推荐佣金；<br />
+          2. 这<strong>绝对不会增加您的支付成本</strong>。在多数情况下，由于向厂商争取了专属优惠码，您甚至能享受到低于市面公开价格的折扣；<br />
+          3. 返佣合作绝不会左右我的推荐选择与评分——不合格的产品给再多佣金也绝不上架。
+        </blockquote>
+
+        <h2>联系与交流</h2>
+        <p>
+          如果你有好用好玩的生产力工具希望我体验，或有任何想法建议，欢迎交流：
+        </p>
+        <ul>
+          <li>电子邮箱：<a href={`mailto:${siteConfig.email}`} class="text-brand-600 dark:text-brand-400 font-mono underline hover:no-underline">{siteConfig.email}</a></li>
+          <li>社交媒体：<a href={siteConfig.socialUrl} target="_blank" rel="noopener noreferrer" class="text-brand-600 dark:text-brand-400 font-mono underline hover:no-underline">{siteConfig.socialHandle}</a></li>
+        </ul>
+      </div>
+
+      <div class="lang-en">
+        <h2>Why I Built This Space</h2>
+        <p>
+          The modern web is inundated with algorithmic spam, AI-generated rehashes, and masqueraded brand advertisements. Too many gadgets end up collecting dust, and too many apps add unnecessary friction.
+        </p>
+        <p>
+          <strong>HDC's Space</strong> serves as an independent digital sanctuary. My mission is to cut through commercial noise through genuine, long-term personal testing—highlighting only the high-leverage tools that genuinely amplify productivity.
+        </p>
+
+        <h2>My Three Editorial Pillars</h2>
+        <ul>
+          <li><strong>Exhaustive Testing</strong>: No drive-by benchmarks. Software and desk gear undergo weeks or months of intensive daily workflow execution.</li>
+          <li><strong>Balanced Candor</strong>: I highlight drawbacks, learning curves, and caveats just as actively as positive highlights.</li>
+          <li><strong>Uncompromised Independence</strong>: Editorial verdicts are never for sale. Substandard products will never be featured.</li>
+        </ul>
+
+        <h2 id="disclosure">Affiliate & Commercial Disclosure</h2>
+        <p>
+          To maintain this publication independently without annoying banner ads, HDC's Space participates in select affiliate partner programs.
+        </p>
+        <blockquote>
+          <strong>Transparency Promise:</strong><br />
+          1. When you purchase or subscribe through partner links on this site, I may earn an affiliate commission.<br />
+          2. <strong>This never increases your purchase price.</strong> In fact, partner links frequently include exclusive discount codes.<br />
+          3. Commercial relationships never influence ratings or editorial opinions.
+        </blockquote>
+
+        <h2>Contact & Collaboration</h2>
+        <p>
+          Have a compelling tool you'd like me to check out, or thoughts to share? Feel free to connect:
+        </p>
+        <ul>
+          <li>Email: <a href={`mailto:${siteConfig.email}`} class="text-brand-600 dark:text-brand-400 font-mono underline hover:no-underline">{siteConfig.email}</a></li>
+          <li>Social: <a href={siteConfig.socialUrl} target="_blank" rel="noopener noreferrer" class="text-brand-600 dark:text-brand-400 font-mono underline hover:no-underline">{siteConfig.socialHandle}</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

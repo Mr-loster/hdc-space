@@ -1,0 +1,112 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AffiliateDisclosure from '../../components/AffiliateDisclosure.astro';
+import { getCollection } from 'astro:content';
+
+const allReviews = await getCollection('reviews');
+const sortedReviews = allReviews.sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<BaseLayout
+  title="深度测评与长文报告"
+  description="客观中立的长期体验测评报告，涵盖效率软件与数码硬件的使用优缺点与选购避坑指南。"
+>
+  <div class="mx-auto max-w-5xl px-4 py-12 sm:px-6">
+    <div class="max-w-2xl mb-8">
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400 mb-2">
+        <span>📖</span>
+        <span class="lang-zh">长期实测报告</span>
+        <span class="lang-en">Independent Reviews</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-kraft-950 dark:text-stone-50 tracking-tight mb-4">
+        <span class="lang-zh">深度测评与选购指南</span>
+        <span class="lang-en">In-Depth Reviews & Field Guides</span>
+      </h1>
+      <p class="text-sm text-kraft-700 dark:text-stone-300 leading-relaxed">
+        <span class="lang-zh">
+          每一篇报告均由 HDC 作为主力工具深度体验后输出，拒绝照搬官方通稿，全面披露真实优缺点与适合人群。
+        </span>
+        <span class="lang-en">
+          Every guide is written after weeks or years of continuous personal use by HDC. We candidly discuss compromises, friction, and who should buy.
+        </span>
+      </p>
+    </div>
+
+    <AffiliateDisclosure />
+
+    {sortedReviews.length > 0 ? (
+      <div class="mt-10 space-y-6">
+        {sortedReviews.map((review) => {
+          const dateZh = new Intl.DateTimeFormat('zh-CN', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          }).format(review.data.pubDate);
+          const dateEn = new Intl.DateTimeFormat('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          }).format(review.data.pubDate);
+
+          return (
+            <a
+              href={`/reviews/${review.slug}`}
+              class="group block rounded-2xl border border-kraft-200 bg-[#FAF7F2] p-6 sm:p-8 shadow-xs transition-all hover:-translate-y-0.5 hover:border-brand-500/50 hover:shadow-md dark:border-stone-800 dark:bg-[#201D1A]"
+            >
+              <div class="flex flex-col sm:flex-row items-start justify-between gap-4">
+                <div class="flex items-start gap-4">
+                  <span class="text-4xl sm:text-5xl">{review.data.heroEmoji}</span>
+                  <div>
+                    <div class="flex flex-wrap items-center gap-2 mb-2 text-xs text-kraft-500 dark:text-stone-400">
+                      <span class="rounded bg-kraft-200/80 px-2.5 py-0.5 font-bold text-kraft-800 dark:bg-stone-800 dark:text-stone-300">
+                        {review.data.category}
+                      </span>
+                      <span>•</span>
+                      <span>
+                        <span class="lang-zh">{dateZh}</span>
+                        <span class="lang-en">{dateEn}</span>
+                      </span>
+                      <span class="text-amber-600 dark:text-amber-400 font-bold ml-2">★ {review.data.rating.toFixed(1)}</span>
+                    </div>
+                    <h2 class="text-xl sm:text-2xl font-bold text-kraft-900 dark:text-stone-100 group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors mb-2">
+                      {review.data.title}
+                    </h2>
+                    <p class="text-sm text-kraft-600 dark:text-stone-400 leading-relaxed line-clamp-2 mb-4">
+                      {review.data.description}
+                    </p>
+                    <div class="flex flex-wrap gap-1.5">
+                      {review.data.tags.map((tag) => (
+                        <span class="text-[11px] text-kraft-600 bg-kraft-150 dark:bg-stone-800 dark:text-stone-300 px-2 py-0.5 rounded font-medium">
+                          #{tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <span class="hidden sm:inline-flex items-center text-xs font-bold text-brand-600 dark:text-brand-400 group-hover:translate-x-1 transition-transform whitespace-nowrap">
+                  <span class="lang-zh">阅读全文 →</span>
+                  <span class="lang-en">Read Full Story →</span>
+                </span>
+              </div>
+            </a>
+          );
+        })}
+      </div>
+    ) : (
+      <!-- Empty State -->
+      <div class="my-12 rounded-3xl border border-dashed border-kraft-300 dark:border-stone-800 p-16 text-center bg-[#FAF7F2]/50 dark:bg-[#1E1B18]/50">
+        <span class="text-5xl mb-4 block">✍️</span>
+        <h3 class="text-lg font-bold text-kraft-950 dark:text-stone-100 mb-2">
+          <span class="lang-zh">长篇真实测评正在撰写中</span>
+          <span class="lang-en">In-Depth Field Reviews in Progress</span>
+        </h3>
+        <p class="text-xs text-kraft-600 dark:text-stone-400 max-w-md mx-auto leading-relaxed">
+          <span class="lang-zh">为摒弃虚假种草与机器洗稿，所有文章均需经过严格的主力使用周期。首批长篇测评正在排期创作中，即将发布。</span>
+          <span class="lang-en">To ensure zero artificial fluff, each review requires extensive daily execution. First batch of articles will be published shortly.</span>
+        </p>
+      </div>
+    )}
+  </div>
+</BaseLayout>

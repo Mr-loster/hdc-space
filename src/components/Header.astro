@@ -1,0 +1,151 @@
+---
+import { siteConfig } from '../data/siteConfig';
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="sticky top-0 z-50 border-b border-kraft-200/90 bg-[#F5EFE6]/90 backdrop-blur-md dark:border-stone-800 dark:bg-[#171513]/90 transition-colors">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
+    <!-- Brand Logo & HDC Avatar -->
+    <a href="/" class="flex items-center gap-3 group">
+      <div class="relative">
+        <img
+          src={siteConfig.avatar}
+          alt={siteConfig.author}
+          class="h-10 w-10 rounded-full object-cover ring-2 ring-kraft-300 dark:ring-stone-700 shadow-sm group-hover:scale-105 transition-transform"
+        />
+        <span class="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-500 ring-2 ring-[#F5EFE6] dark:ring-[#171513]"></span>
+      </div>
+      <div class="flex flex-col">
+        <div class="flex items-center gap-1.5">
+          <span class="font-extrabold text-base sm:text-lg text-kraft-900 dark:text-stone-100 tracking-tight group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
+            <span class="lang-zh">HDC的空间</span>
+            <span class="lang-en">HDC's Space</span>
+          </span>
+        </div>
+        <span class="text-[11px] font-medium text-kraft-600 dark:text-stone-400 tracking-wide">
+          <span class="lang-zh">思考、沉淀与好物指南</span>
+          <span class="lang-en">Thoughts & Curated Gear</span>
+        </span>
+      </div>
+    </a>
+
+    <!-- Navigation Links -->
+    <nav class="hidden md:flex items-center gap-1">
+      {siteConfig.navLinks.map((link) => {
+        const isActive = link.href === '/' ? currentPath === '/' : currentPath.startsWith(link.href);
+        return (
+          <a
+            href={link.href}
+            class={`px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition-all ${
+              isActive
+                ? "bg-kraft-200/80 dark:bg-stone-800 text-kraft-900 dark:text-stone-100 shadow-xs"
+                : "text-kraft-700 dark:text-stone-300 hover:text-kraft-950 dark:hover:text-white hover:bg-kraft-200/50 dark:hover:bg-stone-800/60"
+            }`}
+          >
+            <span class="lang-zh">{link.nameZh}</span>
+            <span class="lang-en">{link.nameEn}</span>
+          </a>
+        );
+      })}
+    </nav>
+
+    <!-- Controls: Language Toggle + Dark Mode Toggle + CTA -->
+    <div class="flex items-center gap-2">
+      <!-- Language Toggle Button (中 / EN) -->
+      <button
+        id="lang-toggle"
+        type="button"
+        class="inline-flex h-9 items-center justify-center rounded-xl border border-kraft-250 bg-kraft-50/70 px-2.5 text-xs font-bold text-kraft-800 shadow-xs hover:bg-kraft-150 active:scale-95 transition-all dark:border-stone-800 dark:bg-stone-900 dark:text-stone-200 dark:hover:bg-stone-800"
+        aria-label="切换中英文 / Switch Language"
+        title="中英文切换"
+      >
+        <span class="lang-zh flex items-center gap-1 font-mono">
+          <span>🌐</span>
+          <span>EN</span>
+        </span>
+        <span class="lang-en flex items-center gap-1 font-mono">
+          <span>🌐</span>
+          <span>中</span>
+        </span>
+      </button>
+
+      <!-- Dark mode toggle -->
+      <button
+        id="theme-toggle"
+        type="button"
+        class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-kraft-250 bg-kraft-50/70 text-kraft-800 shadow-xs hover:bg-kraft-150 active:scale-95 transition-all dark:border-stone-800 dark:bg-stone-900 dark:text-stone-200 dark:hover:bg-stone-800"
+        aria-label="切换暗黑模式 / Toggle Theme"
+      >
+        <span class="dark:hidden text-sm">🌙</span>
+        <span class="hidden dark:inline text-sm">☀️</span>
+      </button>
+
+      <!-- Quick CTA -->
+      <a
+        href="/gear"
+        class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-kraft-900 dark:bg-stone-100 text-kraft-50 dark:text-stone-950 text-xs font-bold hover:bg-kraft-800 dark:hover:bg-white active:scale-95 transition-all shadow-xs"
+      >
+        <span>🔥</span>
+        <span class="lang-zh">精选好物</span>
+        <span class="lang-en">Gear</span>
+      </a>
+
+      <!-- Mobile Menu Button -->
+      <button
+        id="mobile-menu-btn"
+        type="button"
+        class="md:hidden inline-flex h-9 w-9 items-center justify-center rounded-xl border border-kraft-250 bg-kraft-50/70 text-kraft-800 dark:border-stone-800 dark:bg-stone-900 dark:text-stone-200"
+        aria-label="打开菜单"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Dropdown -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-kraft-200 dark:border-stone-800 bg-[#F5EFE6]/95 dark:bg-[#171513]/95 px-4 py-3 space-y-1">
+    {siteConfig.navLinks.map((link) => (
+      <a
+        href={link.href}
+        class="block px-3 py-2 rounded-xl text-sm font-semibold text-kraft-800 dark:text-stone-200 hover:bg-kraft-200/60 dark:hover:bg-stone-800"
+      >
+        <span class="lang-zh">{link.nameZh}</span>
+        <span class="lang-en">{link.nameEn}</span>
+      </a>
+    ))}
+  </div>
+</header>
+
+<script>
+  // Mobile menu toggle
+  const mobileBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  mobileBtn?.addEventListener('click', () => {
+    mobileMenu?.classList.toggle('hidden');
+  });
+
+  // Theme toggle
+  const themeToggle = document.getElementById('theme-toggle');
+  themeToggle?.addEventListener('click', () => {
+    if (document.documentElement.classList.contains('dark')) {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    } else {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    }
+  });
+
+  // Language toggle (Default: zh, toggle to en)
+  const langToggle = document.getElementById('lang-toggle');
+  langToggle?.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-lang') || 'zh';
+    const next = current === 'zh' ? 'en' : 'zh';
+    document.documentElement.setAttribute('data-lang', next);
+    document.documentElement.setAttribute('lang', next === 'zh' ? 'zh-CN' : 'en');
+    localStorage.setItem('lang', next);
+  });
+</script>

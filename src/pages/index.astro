@@ -1,0 +1,237 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import AffiliateDisclosure from '../components/AffiliateDisclosure.astro';
+import { affiliateList } from '../data/affiliates';
+import { siteConfig } from '../data/siteConfig';
+import { getCollection } from 'astro:content';
+
+const featuredProducts = affiliateList.filter((item) => item.featured);
+const allReviews = await getCollection('reviews');
+const latestReviews = allReviews
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+---
+
+<BaseLayout>
+  <!-- Hero Section with HDC's Avatar -->
+  <section class="relative overflow-hidden border-b border-kraft-200/80 bg-[#FAF7F2]/60 py-16 sm:py-20 dark:border-stone-800/80 dark:bg-[#1A1815]/40">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-10">
+        <!-- Left: Intro Copy -->
+        <div class="flex-1 text-center md:text-left">
+          <div class="inline-flex items-center gap-2 rounded-full border border-kraft-300 bg-kraft-100/90 px-3.5 py-1 text-xs font-bold text-kraft-800 dark:border-stone-700 dark:bg-stone-850 dark:text-stone-300 mb-6 shadow-2xs">
+            <span>☕</span>
+            <span class="lang-zh">欢迎来到 HDC 的个人空间 • 真实长测与好物</span>
+            <span class="lang-en">Welcome to HDC's Space • Long-Term Tested Gear</span>
+          </div>
+
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-kraft-950 dark:text-stone-50 mb-6 leading-tight">
+            <span class="lang-zh">
+              探索真正提升效能的<br />
+              <span class="bg-gradient-to-r from-brand-600 via-amber-600 to-amber-700 bg-clip-text text-transparent">
+                数字生产力与硬核装备
+              </span>
+            </span>
+            <span class="lang-en">
+              Curated Tools & Gear for<br />
+              <span class="bg-gradient-to-r from-brand-600 via-amber-600 to-amber-700 bg-clip-text text-transparent">
+                Focused Knowledge Workers
+              </span>
+            </span>
+          </h1>
+
+          <p class="text-base sm:text-lg text-kraft-700 dark:text-stone-300 leading-relaxed mb-8 max-w-2xl">
+            <span class="lang-zh">
+              这里是 HDC 记录个人思考与分享主力装备的角落。每一个被推荐的工具，都源自真实生活与高强度工作流中的长期实测，拒绝充值套话。
+            </span>
+            <span class="lang-en">
+              A personal corner where HDC documents deliberate thoughts and tested work tools. Everything recommended here has survived hundreds of hours of daily execution.
+            </span>
+          </p>
+
+          <div class="flex flex-wrap items-center justify-center md:justify-start gap-4">
+            <a
+              href="/gear"
+              class="inline-flex items-center gap-2 rounded-xl bg-kraft-900 px-6 py-3 text-sm font-bold text-kraft-50 shadow-sm hover:bg-brand-600 active:scale-95 transition-all dark:bg-stone-100 dark:text-stone-950 dark:hover:bg-brand-400"
+            >
+              <span>🔥</span>
+              <span class="lang-zh">浏览好物清单</span>
+              <span class="lang-en">Explore Curated Gear</span>
+            </a>
+            <a
+              href="/reviews"
+              class="inline-flex items-center gap-2 rounded-xl border border-kraft-300 bg-[#FAF7F2] px-6 py-3 text-sm font-bold text-kraft-800 hover:bg-kraft-150 active:scale-95 transition-all dark:border-stone-700 dark:bg-stone-900 dark:text-stone-200 dark:hover:bg-stone-800"
+            >
+              <span>📖</span>
+              <span class="lang-zh">阅读深度测评</span>
+              <span class="lang-en">Read Field Reviews</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: HDC Avatar Card -->
+        <div class="relative shrink-0">
+          <div class="relative mx-auto w-48 sm:w-56 md:w-64 rounded-3xl p-3 bg-gradient-to-b from-kraft-200 to-kraft-300/60 dark:from-stone-800 dark:to-stone-900/60 shadow-lg border border-kraft-250 dark:border-stone-700">
+            <img
+              src={siteConfig.avatar}
+              alt="HDC Avatar"
+              class="w-full aspect-square rounded-2xl object-cover shadow-sm ring-1 ring-kraft-200 dark:ring-stone-700"
+            />
+            <div class="mt-3 text-center px-1">
+              <span class="font-extrabold text-sm text-kraft-900 dark:text-stone-100 block">
+                HDC
+              </span>
+              <span class="text-[11px] text-kraft-600 dark:text-stone-400">
+                <span class="lang-zh">效率追求者 / 独立创作者</span>
+                <span class="lang-en">Builder & Productivity Enthusiast</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 py-12 space-y-16">
+    <!-- Affiliate Disclosure Banner -->
+    <AffiliateDisclosure />
+
+    <!-- Section 1: Featured Gear -->
+    <section>
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+        <div>
+          <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400 mb-1">
+            <span>⭐</span>
+            <span class="lang-zh">真实主力好物</span>
+            <span class="lang-en">Curated Essentials</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-kraft-950 dark:text-stone-50 tracking-tight">
+            <span class="lang-zh">HDC 的常备好物与工具</span>
+            <span class="lang-en">HDC's Curated Essentials</span>
+          </h2>
+        </div>
+        {affiliateList.length > 0 && (
+          <a
+            href="/gear"
+            class="text-xs font-bold text-brand-600 dark:text-brand-400 hover:underline flex items-center gap-1"
+          >
+            <span class="lang-zh">查看全部好物清单 ({affiliateList.length}) →</span>
+            <span class="lang-en">View all gear ({affiliateList.length}) →</span>
+          </a>
+        )}
+      </div>
+
+      <!-- Products Grid or Empty State -->
+      {featuredProducts.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {featuredProducts.map((product) => (
+            <ProductCard product={product} />
+          ))}
+        </div>
+      ) : (
+        <div class="rounded-3xl border border-dashed border-kraft-300 dark:border-stone-800 p-12 text-center bg-[#FAF7F2]/50 dark:bg-[#1E1B18]/50">
+          <span class="text-4xl mb-3 block">📦</span>
+          <h3 class="text-base font-bold text-kraft-900 dark:text-stone-100 mb-2">
+            <span class="lang-zh">真实好物正在陆续上架中</span>
+            <span class="lang-en">Authentic Gear Lineup Coming Soon</span>
+          </h3>
+          <p class="text-xs text-kraft-600 dark:text-stone-400 max-w-md mx-auto leading-relaxed">
+            <span class="lang-zh">本站坚守“宁缺毋滥，只推亲测真品”的准则。没有真实体验过或未完成合作对接的商品均保持空白，首批真实严选好物即将在此公布。</span>
+            <span class="lang-en">We strictly recommend only products verified in real workflows. Products without verified testing remain blank; the first curated batch will arrive shortly.</span>
+          </p>
+        </div>
+      )}
+    </section>
+
+    <!-- Section 2: Latest Reviews -->
+    <section class="border-t border-kraft-200/80 dark:border-stone-800 pt-16">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+        <div>
+          <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400 mb-1">
+            <span>📝</span>
+            <span class="lang-zh">长文实测报告</span>
+            <span class="lang-en">In-Depth Reports</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-kraft-950 dark:text-stone-50 tracking-tight">
+            <span class="lang-zh">深度横评与测评专栏</span>
+            <span class="lang-en">Field Notes & Deep Dives</span>
+          </h2>
+        </div>
+        {latestReviews.length > 0 && (
+          <a
+            href="/reviews"
+            class="text-xs font-bold text-brand-600 dark:text-brand-400 hover:underline flex items-center gap-1"
+          >
+            <span class="lang-zh">阅读全部测评 →</span>
+            <span class="lang-en">Read all reviews →</span>
+          </a>
+        )}
+      </div>
+
+      <!-- Reviews Grid or Empty State -->
+      {latestReviews.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {latestReviews.map((review) => {
+            const dateZh = new Intl.DateTimeFormat('zh-CN', {
+              month: 'short',
+              day: 'numeric',
+              year: 'numeric',
+            }).format(review.data.pubDate);
+            const dateEn = new Intl.DateTimeFormat('en-US', {
+              month: 'short',
+              day: 'numeric',
+              year: 'numeric',
+            }).format(review.data.pubDate);
+
+            return (
+              <a
+                href={`/reviews/${review.slug}`}
+                class="group flex flex-col justify-between rounded-2xl border border-kraft-200 bg-[#FAF7F2] p-6 shadow-xs transition-all hover:-translate-y-1 hover:border-brand-500/50 hover:shadow-md dark:border-stone-800 dark:bg-[#201D1A]"
+              >
+                <div>
+                  <div class="flex items-center justify-between text-xs text-kraft-500 dark:text-stone-400 mb-3">
+                    <span class="rounded bg-kraft-200/80 px-2.5 py-0.5 font-bold text-kraft-800 dark:bg-stone-800 dark:text-stone-300">
+                      {review.data.category}
+                    </span>
+                    <span>
+                      <span class="lang-zh">{dateZh}</span>
+                      <span class="lang-en">{dateEn}</span>
+                    </span>
+                  </div>
+                  <div class="text-3xl mb-3">{review.data.heroEmoji}</div>
+                  <h3 class="font-bold text-base text-kraft-900 dark:text-stone-100 group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors mb-2 line-clamp-2">
+                    {review.data.title}
+                  </h3>
+                  <p class="text-xs text-kraft-600 dark:text-stone-400 line-clamp-3 leading-relaxed mb-4">
+                    {review.data.description}
+                  </p>
+                </div>
+
+                <div class="flex items-center justify-between text-xs border-t border-kraft-200/70 dark:border-stone-800/80 pt-3 text-brand-600 dark:text-brand-400 font-bold">
+                  <span class="text-amber-600 dark:text-amber-400">★ {review.data.rating.toFixed(1)} / 5.0</span>
+                  <span class="group-hover:translate-x-1 transition-transform">
+                    <span class="lang-zh">阅读全文 →</span>
+                    <span class="lang-en">Read Story →</span>
+                  </span>
+                </div>
+              </a>
+            );
+          })}
+        </div>
+      ) : (
+        <div class="rounded-3xl border border-dashed border-kraft-300 dark:border-stone-800 p-12 text-center bg-[#FAF7F2]/50 dark:bg-[#1E1B18]/50">
+          <span class="text-4xl mb-3 block">✍️</span>
+          <h3 class="text-base font-bold text-kraft-900 dark:text-stone-100 mb-2">
+            <span class="lang-zh">长篇深度测评正在撰写中</span>
+            <span class="lang-en">First In-Depth Reviews In Progress</span>
+          </h3>
+          <p class="text-xs text-kraft-600 dark:text-stone-400 max-w-md mx-auto leading-relaxed">
+            <span class="lang-zh">HDC 正在对多款长期使用的效率工具与桌搭装备进行客观数据整理与体验提炼，真实长测长文即将发布。</span>
+            <span class="lang-en">HDC is compiling real-world usage notes and objective trade-off analyses on daily drivers. Field reviews will be published soon.</span>
+          </p>
+        </div>
+      )}
+    </section>
+  </div>
+</BaseLayout>

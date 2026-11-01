@@ -1,0 +1,205 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import AffiliateDisclosure from '../components/AffiliateDisclosure.astro';
+import { getAffiliateBySlug } from '../data/affiliates';
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  author: string;
+  category: string;
+  tags: string[];
+  rating: number;
+  heroEmoji: string;
+  affiliateSlug?: string;
+  pros: string[];
+  cons: string[];
+}
+
+const {
+  title,
+  description,
+  pubDate,
+  author,
+  category,
+  tags,
+  rating,
+  heroEmoji,
+  affiliateSlug,
+  pros,
+  cons,
+} = Astro.props;
+
+const affiliateProduct = affiliateSlug ? getAffiliateBySlug(affiliateSlug) : undefined;
+const dateZh = new Intl.DateTimeFormat('zh-CN', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+}).format(pubDate);
+const dateEn = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+}).format(pubDate);
+---
+
+<BaseLayout title={title} description={description} article={true}>
+  <article class="mx-auto max-w-3xl px-4 py-10 sm:px-6">
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-2 text-xs text-kraft-600 dark:text-stone-400 mb-6 font-medium">
+      <a href="/" class="hover:text-brand-600 dark:hover:text-brand-400">
+        <span class="lang-zh">首页</span>
+        <span class="lang-en">Home</span>
+      </a>
+      <span>/</span>
+      <a href="/reviews" class="hover:text-brand-600 dark:hover:text-brand-400">
+        <span class="lang-zh">深度测评</span>
+        <span class="lang-en">Reviews</span>
+      </a>
+      <span>/</span>
+      <span class="text-kraft-900 dark:text-stone-200 truncate">{category}</span>
+    </nav>
+
+    <!-- Header info -->
+    <header class="mb-8 border-b border-kraft-200 dark:border-stone-800 pb-8">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="text-3xl">{heroEmoji}</span>
+        <span class="rounded-full bg-kraft-200/90 px-3 py-1 text-xs font-bold text-kraft-800 dark:bg-stone-800 dark:text-stone-200">
+          {category}
+        </span>
+        <div class="flex items-center gap-1 text-amber-600 dark:text-amber-400 text-sm font-bold ml-auto">
+          <span>★</span>
+          <span>{rating.toFixed(1)} / 5.0</span>
+        </div>
+      </div>
+
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-kraft-950 dark:text-stone-50 tracking-tight leading-tight mb-4">
+        {title}
+      </h1>
+
+      <p class="text-base text-kraft-700 dark:text-stone-300 leading-relaxed mb-4">
+        {description}
+      </p>
+
+      <div class="flex flex-wrap items-center justify-between gap-4 text-xs text-kraft-500 dark:text-stone-400">
+        <div class="flex items-center gap-3">
+          <span>
+            <span class="lang-zh">发布于 {dateZh}</span>
+            <span class="lang-en">Published {dateEn}</span>
+          </span>
+          <span>•</span>
+          <span>By HDC</span>
+        </div>
+        <div class="flex flex-wrap gap-1.5">
+          {tags.map((tag) => (
+            <span class="px-2 py-0.5 rounded bg-kraft-150 dark:bg-stone-800 text-kraft-700 dark:text-stone-300 text-[11px] font-medium">
+              #{tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    </header>
+
+    <!-- Affiliate Disclosure Banner -->
+    <AffiliateDisclosure />
+
+    <!-- Pros & Cons Summary Box -->
+    {(pros.length > 0 || cons.length > 0) && (
+      <div class="my-8 rounded-2xl border border-kraft-250 dark:border-stone-800 bg-[#FAF7F2] dark:bg-[#1E1B18] p-6 shadow-xs">
+        <h3 class="text-base font-bold text-kraft-950 dark:text-stone-100 mb-4 flex items-center gap-2">
+          <span>⚡</span>
+          <span class="lang-zh">核心优缺点速览</span>
+          <span class="lang-en">Key Highlights & Trade-offs</span>
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {pros.length > 0 && (
+            <div class="space-y-2">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 flex items-center gap-1">
+                <span>✓</span>
+                <span class="lang-zh">核心亮点（Pros）</span>
+                <span class="lang-en">The Good (Pros)</span>
+              </h4>
+              <ul class="space-y-1.5 text-xs text-kraft-700 dark:text-stone-300">
+                {pros.map((pro) => (
+                  <li class="flex items-start gap-1.5">
+                    <span class="text-emerald-600 font-bold mt-0.5">•</span>
+                    <span>{pro}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {cons.length > 0 && (
+            <div class="space-y-2">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-400 flex items-center gap-1">
+                <span>✗</span>
+                <span class="lang-zh">潜在短板（Cons）</span>
+                <span class="lang-en">The Caveats (Cons)</span>
+              </h4>
+              <ul class="space-y-1.5 text-xs text-kraft-700 dark:text-stone-300">
+                {cons.map((con) => (
+                  <li class="flex items-start gap-1.5">
+                    <span class="text-rose-600 font-bold mt-0.5">•</span>
+                    <span>{con}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      </div>
+    )}
+
+    <!-- Main Markdown Content -->
+    <div class="prose dark:prose-invert">
+      <slot />
+    </div>
+
+    <!-- Bottom Affiliate Callout Box if linked -->
+    {affiliateProduct && (
+      <div class="my-10 rounded-2xl bg-gradient-to-r from-kraft-900 to-amber-900 dark:from-stone-900 dark:to-stone-800 p-6 text-kraft-50 dark:text-stone-100 shadow-md border border-kraft-800 dark:border-stone-700">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div class="space-y-2 text-center sm:text-left">
+            <div class="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-0.5 text-xs font-semibold backdrop-blur-sm">
+              <span>🎁</span>
+              <span>
+                <span class="lang-zh">{affiliateProduct.couponZh || 'HDC 读者专属通道'}</span>
+                <span class="lang-en">{affiliateProduct.couponEn || 'Reader Exclusive Partner Link'}</span>
+              </span>
+            </div>
+            <h3 class="text-xl font-bold">{affiliateProduct.name}</h3>
+            <p class="text-xs text-kraft-200 dark:text-stone-300 max-w-md">
+              <span class="lang-zh">{affiliateProduct.taglineZh}</span>
+              <span class="lang-en">{affiliateProduct.taglineEn}</span>
+            </p>
+          </div>
+          <a
+            href={`/go/${affiliateProduct.slug}`}
+            target="_blank"
+            rel="nofollow sponsored"
+            class="whitespace-nowrap rounded-xl bg-kraft-50 px-6 py-3 text-sm font-bold text-kraft-950 shadow-sm hover:bg-white active:scale-95 transition-all dark:bg-stone-100 dark:text-stone-950"
+          >
+            <span class="lang-zh">前往获取专属优惠 ↗</span>
+            <span class="lang-en">Check Offer on Official Site ↗</span>
+          </a>
+        </div>
+      </div>
+    )}
+
+    <!-- Back to top / back to reviews link -->
+    <div class="mt-12 border-t border-kraft-200 dark:border-stone-800 pt-6 flex items-center justify-between text-xs text-kraft-600 dark:text-stone-400 font-semibold">
+      <a href="/reviews" class="hover:text-brand-600 dark:hover:text-brand-400 flex items-center gap-1">
+        <span>←</span>
+        <span class="lang-zh">返回测评列表</span>
+        <span class="lang-en">Back to All Reviews</span>
+      </a>
+      <a href="#top" class="hover:text-brand-600 dark:hover:text-brand-400">
+        <span class="lang-zh">回到顶部 ↑</span>
+        <span class="lang-en">Back to Top ↑</span>
+      </a>
+    </div>
+  </article>
+</BaseLayout>

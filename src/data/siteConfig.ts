@@ -23,7 +23,7 @@ export const siteConfig: SiteConfig = {
   email: "hande211@gmail.com",
   socialHandle: "@HDC_211",
   socialUrl: "https://x.com/HDC_211",
-  siteUrl: "https://example.com",
+  siteUrl: "https://hdc-space.pages.dev",
   defaultOgImage: "/avatar.jpg",
   navLinks: [
     { nameZh: "首页", nameEn: "Home", href: "/" },
